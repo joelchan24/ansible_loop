@@ -1,0 +1,25 @@
+---
+- name: install cups, vim, httpd, gcc on remote servers
+  hosts: all
+  become: true
+  tasks:
+    - name: Install packages
+      package:
+        name: "{{item}}"
+        state: present
+      loop:
+        - vim
+        - apache2
+        - gcc
+        - cups
+
+    - name: Enable and start the service of httpd and cups
+      service:
+        name: "{{item.name}}"
+        state: "{{item.state}}"
+        enabled: yes
+      loop:
+        - { name: 'apache2', state: 'started' }
+        - { name: 'cups', state: 'started' }
+
+

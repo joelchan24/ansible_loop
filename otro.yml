@@ -1,0 +1,16 @@
+
+
+        ---
+- name: install apache2, sqlite3, git pn remote server
+  hosts: all
+  become: yes
+  tasks:
+    - name: Install list of packages
+      packages: 
+        name: "{{item}}"
+        state: present
+      loop:
+        - cups
+        - vim
+        - httpd
+        - gcc
